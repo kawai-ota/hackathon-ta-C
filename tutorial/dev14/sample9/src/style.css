@@ -1,0 +1,13 @@
+body {
+  padding: 50px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+button {
+  margin-right: 20px;
+  outline: 1px solid #888;
+  padding: 4px;
+}

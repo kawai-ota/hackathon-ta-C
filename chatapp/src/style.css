@@ -1,0 +1,10 @@
+body {
+  padding: 2em;
+}
+
+.button-normal {
+  border: 1px solid #555;
+  background-color: #eee;
+  border-radius: 4px;
+  padding: 4px;
+}
