@@ -26,7 +26,7 @@ onMounted(() => {
 const onPublish = () => {
   const inputArea = document.querySelector(".area");
   const inputText = inputArea.value;
-  const message = `${userName.value} : ${inputText}`;
+  const message = `${userName.value} さん: ${inputText}`;
   // 入力欄を初期化
 
   inputArea.value = "";
