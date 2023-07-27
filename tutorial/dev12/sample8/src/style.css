@@ -7,11 +7,16 @@ div {
   display: inline-block;
 }
 
+
 .style1 {
-}
+  background-color: #00B7FF;
+ }
 
-.style2 {
-}
-
-.style3 {
-}
+ .style2 {
+  color: #ff0000;
+ }
+ 
+ .style3 {
+  font-size: 50px;
+ }
+ 
