@@ -24,12 +24,10 @@ onMounted(() => {
 // #region browser event handler
 // 投稿メッセージをサーバに送信する
 const onPublish = () => {
-  const inputArea = document.querySelector(".area");
-  const inputText = inputArea.value;
-  const message = `${userName.value} さん: ${inputText}`;
+  const message = `${userName.value} さん: ${chatContent.value}`;
   // 入力欄を初期化
 
-  inputArea.value = "";
+  chatContent.value = "";
   socket.emit("publishEvent", message);
   return false
 }
@@ -42,15 +40,13 @@ const onExit = () => {
 
 // メモを画面上に表示する
 const onMemo = () => {
-  const inputArea = document.querySelector(".area");
-  const inputText = inputArea.value;
-  const memoMessage = `${userName.value}さんのメモ:${inputText}`;
+  const memoMessage = `${userName.value}さんのメモ:${chatContent.value}`;
 
   // メモの内容を表示
   chatList.push(memoMessage);
 
   // 入力欄を初期化
-  inputArea.value = "";
+  chatContent.value = "";
 
   return false
 }
@@ -106,7 +102,7 @@ const registSocketEvent = () => {
     <h1 class="text-h3 font-weight-medium">Vue.js Chat チャットルーム</h1>
     <div class="mt-10">
       <p>ログインユーザ：{{ userName }}さん</p>
-      <textarea variant="outlined" placeholder="投稿文を入力してください" rows="4" class="area"></textarea>
+      <textarea v-model="chatContent" variant="outlined" placeholder="投稿文を入力してください" rows="4" class="area"></textarea>
       <div class="mt-5">
         <button class="button-normal" @click="onPublish">投稿</button>
         <button class="button-normal util-ml-8px" @click="onMemo">メモ</button>
