@@ -20,10 +20,17 @@ const inputUserName = ref("")
 // 入室メッセージをクライアントに送信する
 const onEnter = () => {
   // ユーザー名が入力されているかチェック
+  const inputName = document.querySelector(".user-name-text").value;
+  if ( !inputName ) {
+    console.error("ユーザー名が入力されていません");
+    return;
+  }
 
   // 入室メッセージを送信
+  socket.emit("enterOtherEvent", `${inputName}さんが入室しました`);
 
   // 全体で使用するnameに入力されたユーザー名を格納
+  userName.value = inputName;
 
   // チャット画面へ遷移
   router.push({ name: "chat" })
