@@ -22,7 +22,7 @@ const onEnter = () => {
   // ユーザー名が入力されているかチェック
   const inputName = document.querySelector(".user-name-text").value;
   if ( !inputName ) {
-    console.error("ユーザー名が入力されていません");
+    alert("ユーザー名が入力されていません");
     return;
   }
 
