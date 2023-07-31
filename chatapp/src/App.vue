@@ -3,10 +3,12 @@ import { provide, ref } from "vue"
 
 // #region reactive state
 const userName = ref("")
+const user = ref( { name : "", id : ""});
 // #endregion
 
 // #region global variable
 provide("userName", userName)
+provide("user", user);
 // #endregion
 </script>
 
@@ -16,3 +18,4 @@ provide("userName", userName)
 
 <style scoped>
 </style>
+
