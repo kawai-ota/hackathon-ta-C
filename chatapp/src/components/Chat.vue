@@ -4,6 +4,7 @@ import io from "socket.io-client"
 
 // #region global state
 const userName = inject("userName")
+const user = inject("user");
 // #endregion
 
 // #region local variable
@@ -13,6 +14,7 @@ const socket = io()
 // #region reactive variable
 const chatContent = ref("")
 const chatList = reactive([])
+const loginUsers = reactive([]); //ログインしているユーザー(自身も含む)
 // #endregion
 
 // #region lifecycle
@@ -36,6 +38,7 @@ const onPublish = () => {
 const onExit = () => {
   const message = `${userName.value}さんが退出しました`;
   socket.emit("exitEvent", message);
+  doLogout();
 }
 
 // メモを画面上に表示する
@@ -55,7 +58,6 @@ const onMemo = () => {
 // #region socket event handler
 // サーバから受信した入室メッセージ画面上に表示する
 const onReceiveEnter = (data) => {
-  // onReceiveEnter(data)
   chatList.push(data);
 }
 
@@ -71,6 +73,11 @@ const onReceivePublish = (data) => {
 // #endregion
 
 // #region local methods
+
+const doLogout = () => {
+  socket.emit("logoutEvent", user.value); 
+}
+
 // イベント登録をまとめる
 const registSocketEvent = () => {
   // 入室イベントを受け取ったら実行
@@ -92,9 +99,19 @@ const registSocketEvent = () => {
     onReceivePublish(data);
   })
 
-  socket.emit("enterEvent", "あなたが入室しました");
+  //<------Users周りのイベント領域------
+
+  socket.on("refleshUsers", (users) => {
+    loginUsers.splice(0, loginUsers.length, ...users);
+  })
+
+
+  //------Users周りのイベント領域------>
 }
+
 // #endregion
+
+socket.emit("enterEvent", "あなたが入室しました");
 </script>
 
 <template>
@@ -116,6 +133,16 @@ const registSocketEvent = () => {
     <router-link to="/" class="link">
       <button type="button" class="button-normal button-exit" @click="onExit">退室する</button>
     </router-link>
+
+    <!-- ログインユーザーのテスト用 -->
+    <div class="mt-5" v-if="loginUsers.length !== 0">
+      <p>ログイン中のユーザー</p>
+      <ul>
+        <li class="item mt-4" v-for="(user, i) in loginUsers" :key="i">{{ user }}</li>
+      </ul>
+    </div>
+    <!-- ログインユーザーのテスト用 end -->
+
   </div>
 </template>
 
